@@ -1,7 +1,7 @@
 import { inspect } from 'util';
 import debug from 'debug';
 
-import { ElectronVersions } from './versions';
+import { QuickVersions } from './versions';
 import { Fiddle, FiddleFactory } from './fiddle';
 import { Runner } from './runner';
 
@@ -9,7 +9,7 @@ export async function runFromCommandLine(argv: string[]): Promise<void> {
   const d = debug('fiddle-core:runFromCommandLine');
 
   d(inspect({ argv }));
-  const versions = await ElectronVersions.create();
+  const versions = await QuickVersions.create();
   const fiddleFactory = new FiddleFactory();
   const runner = await Runner.create({ versions, fiddleFactory });
   const versionArgs: string[] = [];

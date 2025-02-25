@@ -36,7 +36,7 @@ export interface ReleaseInfo {
  * Interface for an object that manages a list of Electron releases.
  *
  * See {@link BaseVersions} for testing situations.
- * See {@link ElectronVersions} for production.
+ * See {@link QuickVersions} for production.
  */
 export interface Versions {
   /** Semver-Major numbers of branches that only have prereleases */
@@ -70,7 +70,7 @@ export interface Versions {
   getReleaseInfo(version: SemOrStr): ReleaseInfo | undefined;
 }
 
-export interface ElectronVersionsCreateOptions {
+export interface QuickVersionsCreateOptions {
   /** Initial versions to use if there is no cache. When provided, no initial fetch is done */
   initialVersions?: unknown;
 
@@ -142,7 +142,7 @@ const NUM_SUPPORTED_MAJORS = 3;
  * Implementation of {@link Versions} that does everything except self-populate.
  * It needs to be fed version info in its constructor.
  *
- * In production, use subclass '{@link ElectronVersions}'. This base class is
+ * In production, use subclass '{@link QuickVersions}'. This base class is
  * useful in testing because it's an easy way to inject fake test data into a
  * real Versions object.
  */
@@ -278,7 +278,7 @@ export class BaseVersions implements Versions {
  *
  * This is generally what to use in production.
  */
-export class ElectronVersions extends BaseVersions {
+export class QuickVersions extends BaseVersions {
   private constructor(
     private readonly versionsCache: string,
     private mtimeMs: number,
@@ -309,8 +309,8 @@ export class ElectronVersions extends BaseVersions {
 
   public static async create(
     paths: Partial<Paths> = {},
-    options: ElectronVersionsCreateOptions = {},
-  ): Promise<ElectronVersions> {
+    options: QuickVersionsCreateOptions = {},
+  ): Promise<QuickVersions> {
     const d = debug('fiddle-core:ElectronVersions:create');
     const { versionsCache } = { ...DefaultPaths, ...paths };
 
@@ -323,7 +323,7 @@ export class ElectronVersions extends BaseVersions {
       try {
         const st = await fs.stat(versionsCache);
         versions = await fs.readJson(versionsCache);
-        staleCache = !ElectronVersions.isCacheFresh(st.mtimeMs, now);
+        staleCache = !QuickVersions.isCacheFresh(st.mtimeMs, now);
       } catch (err) {
         d('cache file missing or cannot be read', err);
       }
@@ -331,7 +331,7 @@ export class ElectronVersions extends BaseVersions {
 
     if (!versions || staleCache) {
       try {
-        versions = await ElectronVersions.fetchVersions(versionsCache);
+        versions = await QuickVersions.fetchVersions(versionsCache);
       } catch (err) {
         d('error fetching versions', err);
         if (!versions) {
@@ -340,7 +340,7 @@ export class ElectronVersions extends BaseVersions {
       }
     }
 
-    return new ElectronVersions(versionsCache, now, versions);
+    return new QuickVersions(versionsCache, now, versions);
   }
 
   // update the cache
@@ -349,7 +349,7 @@ export class ElectronVersions extends BaseVersions {
     const { mtimeMs, versionsCache } = this;
     try {
       this.mtimeMs = Date.now();
-      const versions = await ElectronVersions.fetchVersions(versionsCache);
+      const versions = await QuickVersions.fetchVersions(versionsCache);
       this.setVersions(versions);
       d(`saved "${versionsCache}"`);
     } catch (err) {
@@ -360,7 +360,7 @@ export class ElectronVersions extends BaseVersions {
 
   // update the cache iff it's too old
   private async keepFresh(): Promise<void> {
-    if (!ElectronVersions.isCacheFresh(this.mtimeMs, Date.now())) {
+    if (!QuickVersions.isCacheFresh(this.mtimeMs, Date.now())) {
       await this.fetch();
     }
   }

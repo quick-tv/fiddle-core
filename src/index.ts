@@ -2,7 +2,7 @@
 
 import { DefaultPaths, Paths } from './paths';
 import {
-  ElectronBinary,
+  QuickBinary,
   Installer,
   InstallerParams,
   InstallState,
@@ -20,8 +20,8 @@ import {
 } from './runner';
 import {
   BaseVersions,
-  ElectronVersions,
-  ElectronVersionsCreateOptions,
+  QuickVersions,
+  QuickVersionsCreateOptions,
   ReleaseInfo,
   SemOrStr,
   SemVer,
@@ -34,9 +34,9 @@ export {
   BaseVersions,
   BisectResult,
   DefaultPaths,
-  ElectronBinary,
-  ElectronVersions,
-  ElectronVersionsCreateOptions,
+  QuickBinary,
+  QuickVersions,
+  QuickVersionsCreateOptions,
   Fiddle,
   FiddleFactory,
   FiddleSource,

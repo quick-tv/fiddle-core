@@ -5,7 +5,7 @@ import * as path from 'path';
 import nock, { Scope } from 'nock';
 
 import {
-  ElectronBinary,
+  QuickBinary,
   InstallStateEvent,
   Installer,
   Paths,
@@ -130,7 +130,7 @@ describe('Installer', () => {
         progressCallback,
       });
     const { events, result } = await listenWhile(installer, func);
-    const binaryConfig = result as ElectronBinary;
+    const binaryConfig = result as QuickBinary;
     const { path: zipfile } = binaryConfig;
 
     expect(isDownloaded).toBe(true);

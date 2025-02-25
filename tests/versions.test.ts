@@ -4,7 +4,7 @@ import * as os from 'os';
 import * as path from 'path';
 import * as semver from 'semver';
 
-import { BaseVersions, ElectronVersions } from '../src/versions';
+import { BaseVersions, QuickVersions } from '../src/versions';
 
 describe('BaseVersions', () => {
   let testVersions: BaseVersions;
@@ -285,7 +285,7 @@ describe('ElectronVersions', () => {
         },
       ]);
       expect(nockScope.isDone()); // No mocks
-      const { versions } = await ElectronVersions.create({ versionsCache });
+      const { versions } = await QuickVersions.create({ versionsCache });
       expect(versions.length).toBe(1);
     });
 
@@ -305,7 +305,7 @@ describe('ElectronVersions', () => {
         },
       );
       await fs.remove(versionsCache);
-      const { versions } = await ElectronVersions.create({ versionsCache });
+      const { versions } = await QuickVersions.create({ versionsCache });
       expect(scope.isDone());
       expect(versions.length).toBe(2);
     });
@@ -313,7 +313,7 @@ describe('ElectronVersions', () => {
     it('throws an error with a missing cache and failed fetch', async () => {
       const scope = nockScope.get('/releases.json').replyWithError('Error');
       await fs.remove(versionsCache);
-      await expect(ElectronVersions.create({ versionsCache })).rejects.toThrow(
+      await expect(QuickVersions.create({ versionsCache })).rejects.toThrow(
         Error,
       );
       expect(scope.isDone());
@@ -326,7 +326,7 @@ describe('ElectronVersions', () => {
           'Content-Type': 'application/json',
         });
       await fs.remove(versionsCache);
-      await expect(ElectronVersions.create({ versionsCache })).rejects.toThrow(
+      await expect(QuickVersions.create({ versionsCache })).rejects.toThrow(
         Error,
       );
       expect(scope.isDone());
@@ -352,7 +352,7 @@ describe('ElectronVersions', () => {
       );
       const staleCacheMtime = Date.now() / 1000 - 5 * 60 * 60;
       await fs.utimes(versionsCache, staleCacheMtime, staleCacheMtime);
-      const { versions } = await ElectronVersions.create({ versionsCache });
+      const { versions } = await QuickVersions.create({ versionsCache });
       expect(scope.isDone());
       expect(versions.length).toBe(3);
     });
@@ -361,7 +361,7 @@ describe('ElectronVersions', () => {
       const scope = nockScope.get('/releases.json').replyWithError('Error');
       const staleCacheMtime = Date.now() / 1000 - 5 * 60 * 60;
       await fs.utimes(versionsCache, staleCacheMtime, staleCacheMtime);
-      const { versions } = await ElectronVersions.create({ versionsCache });
+      const { versions } = await QuickVersions.create({ versionsCache });
       expect(scope.isDone());
       expect(versions.length).toBe(1061);
     });
@@ -377,7 +377,7 @@ describe('ElectronVersions', () => {
           version: '0.23.1',
         },
       ];
-      const { versions } = await ElectronVersions.create(
+      const { versions } = await QuickVersions.create(
         { versionsCache },
         { initialVersions },
       );
@@ -399,7 +399,7 @@ describe('ElectronVersions', () => {
           version: '0.23.1',
         },
       ];
-      const { versions } = await ElectronVersions.create(
+      const { versions } = await QuickVersions.create(
         { versionsCache },
         { initialVersions },
       );
@@ -429,7 +429,7 @@ describe('ElectronVersions', () => {
           'Content-Type': 'application/json',
         },
       );
-      const { versions } = await ElectronVersions.create(
+      const { versions } = await QuickVersions.create(
         { versionsCache },
         { ignoreCache: true },
       );
@@ -452,7 +452,7 @@ describe('ElectronVersions', () => {
           version: '0.23.1',
         },
       ];
-      const { versions } = await ElectronVersions.create(
+      const { versions } = await QuickVersions.create(
         { versionsCache },
         { initialVersions, ignoreCache: true },
       );
@@ -462,7 +462,7 @@ describe('ElectronVersions', () => {
 
   describe('.fetch', () => {
     it('updates the cache', async () => {
-      const electronVersions = await ElectronVersions.create({ versionsCache });
+      const electronVersions = await QuickVersions.create({ versionsCache });
       expect(electronVersions.versions.length).toBe(1061);
 
       const scope = nockScope.get('/releases.json').reply(

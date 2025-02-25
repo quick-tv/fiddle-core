@@ -39,7 +39,7 @@ export interface Mirrors {
   electronNightlyMirror: string;
 }
 
-export interface ElectronBinary {
+export interface QuickBinary {
   path: string;
   alreadyExtracted: boolean; // to check if it's kept as zipped or not
 }
@@ -268,7 +268,7 @@ export class Installer extends EventEmitter {
   private async ensureDownloadedImpl(
     version: string,
     opts?: Partial<InstallerParams>,
-  ): Promise<ElectronBinary> {
+  ): Promise<QuickBinary> {
     const d = debug(`fiddle-core:Installer:${version}:ensureDownloadedImpl`);
     const { electronDownloads } = this.paths;
     const zipFile = path.join(electronDownloads, getZipName(version));
@@ -310,12 +310,12 @@ export class Installer extends EventEmitter {
   }
 
   /** map of version string to currently-running active Promise */
-  private downloading = new Map<string, Promise<ElectronBinary>>();
+  private downloading = new Map<string, Promise<QuickBinary>>();
 
   public async ensureDownloaded(
     version: string,
     opts?: Partial<InstallerParams>,
-  ): Promise<ElectronBinary> {
+  ): Promise<QuickBinary> {
     const { downloading: promises } = this;
     let promise = promises.get(version);
     if (promise) return promise;
