@@ -1,10 +1,12 @@
 {
-  "repository": "https://github.com/quick-tv/fiddle-core",
+  "repository": {
+    "url": "git+https://github.com/quick-tv/fiddle-core.git"
+  },
   "homepage": "https://github.com/quick-tv/fiddle-core#readme",
   "author": "liulipeng <pengliliu8086@gmail.com>",
   "license": "MIT",
-  "name": "@quick-tv/fiddle-core",
-  "version": "1.0.0-development",
+  "name": "@quick-tv/fiddle",
+  "version": "0.0.1",
   "description": "Run fiddles from anywhere, on any QuickTV release",
   "main": "dist/index.js",
   "bin": {
