@@ -1,11 +1,11 @@
 {
-  "repository": "https://github.com/electron/fiddle-core",
-  "homepage": "https://github.com/electron/fiddle-core#readme",
-  "author": "Charles Kerr <charles@charleskerr.com>",
+  "repository": "https://github.com/quick-tv/fiddle-core",
+  "homepage": "https://github.com/quick-tv/fiddle-core#readme",
+  "author": "liulipeng <pengliliu8086@gmail.com>",
   "license": "MIT",
-  "name": "@quicktv/fiddle-core",
+  "name": "@quick-tv/fiddle-core",
   "version": "1.0.0-development",
-  "description": "Run fiddles from anywhere, on any Electron release",
+  "description": "Run fiddles from anywhere, on any QuickTV release",
   "main": "dist/index.js",
   "bin": {
     "fiddle-core": "dist/index.js"
