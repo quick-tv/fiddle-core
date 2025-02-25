@@ -36,7 +36,7 @@ export interface ReleaseInfo {
  * Interface for an object that manages a list of Electron releases.
  *
  * See {@link BaseVersions} for testing situations.
- * See {@link QuickVersions} for production.
+ * See {@link QuickTVVersions} for production.
  */
 export interface Versions {
   /** Semver-Major numbers of branches that only have prereleases */
@@ -70,7 +70,7 @@ export interface Versions {
   getReleaseInfo(version: SemOrStr): ReleaseInfo | undefined;
 }
 
-export interface QuickVersionsCreateOptions {
+export interface QuickTVVersionsCreateOptions {
   /** Initial versions to use if there is no cache. When provided, no initial fetch is done */
   initialVersions?: unknown;
 
@@ -142,7 +142,7 @@ const NUM_SUPPORTED_MAJORS = 3;
  * Implementation of {@link Versions} that does everything except self-populate.
  * It needs to be fed version info in its constructor.
  *
- * In production, use subclass '{@link QuickVersions}'. This base class is
+ * In production, use subclass '{@link QuickTVVersions}'. This base class is
  * useful in testing because it's an easy way to inject fake test data into a
  * real Versions object.
  */
@@ -278,7 +278,7 @@ export class BaseVersions implements Versions {
  *
  * This is generally what to use in production.
  */
-export class QuickVersions extends BaseVersions {
+export class QuickTVVersions extends BaseVersions {
   private constructor(
     private readonly versionsCache: string,
     private mtimeMs: number,
@@ -288,8 +288,8 @@ export class QuickVersions extends BaseVersions {
   }
 
   private static async fetchVersions(cacheFile: string): Promise<unknown> {
-    const d = debug('fiddle-core:ElectronVersions:fetchVersions');
-    const url = 'https://releases.electronjs.org/releases.json';
+    const d = debug('fiddle-core:QuickTVVersions:fetchVersions');
+    const url = 'https://registry.npmjs.org/@quicktvui/quicktvui3';
     d('fetching releases list from', url);
     const response = await fetch(url);
     if (!response.ok) {
@@ -309,9 +309,9 @@ export class QuickVersions extends BaseVersions {
 
   public static async create(
     paths: Partial<Paths> = {},
-    options: QuickVersionsCreateOptions = {},
-  ): Promise<QuickVersions> {
-    const d = debug('fiddle-core:ElectronVersions:create');
+    options: QuickTVVersionsCreateOptions = {},
+  ): Promise<QuickTVVersions> {
+    const d = debug('fiddle-core:QuickTVVersions:create');
     const { versionsCache } = { ...DefaultPaths, ...paths };
 
     // Use initialVersions instead if provided, and don't fetch if so
@@ -323,7 +323,7 @@ export class QuickVersions extends BaseVersions {
       try {
         const st = await fs.stat(versionsCache);
         versions = await fs.readJson(versionsCache);
-        staleCache = !QuickVersions.isCacheFresh(st.mtimeMs, now);
+        staleCache = !QuickTVVersions.isCacheFresh(st.mtimeMs, now);
       } catch (err) {
         d('cache file missing or cannot be read', err);
       }
@@ -331,7 +331,7 @@ export class QuickVersions extends BaseVersions {
 
     if (!versions || staleCache) {
       try {
-        versions = await QuickVersions.fetchVersions(versionsCache);
+        versions = await QuickTVVersions.fetchVersions(versionsCache);
       } catch (err) {
         d('error fetching versions', err);
         if (!versions) {
@@ -340,16 +340,16 @@ export class QuickVersions extends BaseVersions {
       }
     }
 
-    return new QuickVersions(versionsCache, now, versions);
+    return new QuickTVVersions(versionsCache, now, versions);
   }
 
   // update the cache
   public async fetch(): Promise<void> {
-    const d = debug('fiddle-core:ElectronVersions:fetch');
+    const d = debug('fiddle-core:QuickTVVersions:fetch');
     const { mtimeMs, versionsCache } = this;
     try {
       this.mtimeMs = Date.now();
-      const versions = await QuickVersions.fetchVersions(versionsCache);
+      const versions = await QuickTVVersions.fetchVersions(versionsCache);
       this.setVersions(versions);
       d(`saved "${versionsCache}"`);
     } catch (err) {
@@ -360,7 +360,7 @@ export class QuickVersions extends BaseVersions {
 
   // update the cache iff it's too old
   private async keepFresh(): Promise<void> {
-    if (!QuickVersions.isCacheFresh(this.mtimeMs, Date.now())) {
+    if (!QuickTVVersions.isCacheFresh(this.mtimeMs, Date.now())) {
       await this.fetch();
     }
   }

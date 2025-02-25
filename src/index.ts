@@ -2,7 +2,7 @@
 
 import { DefaultPaths, Paths } from './paths';
 import {
-  QuickBinary,
+  QuickTVBinary,
   Installer,
   InstallerParams,
   InstallState,
@@ -20,8 +20,8 @@ import {
 } from './runner';
 import {
   BaseVersions,
-  QuickVersions,
-  QuickVersionsCreateOptions,
+  QuickTVVersions,
+  QuickTVVersionsCreateOptions,
   ReleaseInfo,
   SemOrStr,
   SemVer,
@@ -34,9 +34,9 @@ export {
   BaseVersions,
   BisectResult,
   DefaultPaths,
-  QuickBinary,
-  QuickVersions,
-  QuickVersionsCreateOptions,
+  QuickTVBinary,
+  QuickTVVersions,
+  QuickTVVersionsCreateOptions,
   Fiddle,
   FiddleFactory,
   FiddleSource,

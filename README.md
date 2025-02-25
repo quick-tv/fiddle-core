@@ -1,9 +1,9 @@
-# @electron/fiddle-core
+# @quicktv/fiddle-core
 
 [![Test](https://github.com/electron/fiddle-core/actions/workflows/test.yml/badge.svg)](https://github.com/electron/fiddle-core/actions/workflows/test.yml)
-[![NPM](https://img.shields.io/npm/v/@electron/fiddle-core.svg?style=flat)](https://npmjs.org/package/@electron/fiddle-core)
+[![NPM](https://img.shields.io/npm/v/@quicktv/fiddle-core.svg?style=flat)](https://npmjs.org/package/@quicktv/fiddle-core)
 
-Run fiddles from anywhere, on any Electron release
+Run fiddles from anywhere, on any QuickTV release
 
 ## CLI
 
@@ -36,7 +36,7 @@ $ fiddle-core bisect 8.0.0 13.0.0 642fa8daaebea6044c9079e3f8a46390
 🟢 passed 12.0.1
 🔴 failed 12.0.2
 Commits between versions:
-↔ https://github.com/electron/electron/compare/v12.0.1...v12.0.2
+↔ https://github.com/quicktv/quicktv/compare/v12.0.1...v12.0.2
 Done in 28.19s.
 ```
 
@@ -45,7 +45,7 @@ Done in 28.19s.
 ### Hello, World!
 
 ```ts
-import { Runner } from '@electron/fiddle-core';
+import { Runner } from '@quicktv/fiddle-core';
 
 const runner = await Runner.create();
 const { status } = await runner.run('13.1.7', '/path/to/fiddle');
@@ -55,40 +55,40 @@ console.log(status);
 ### Running Fiddles
 
 ```ts
-import { Runner } from '@electron/fiddle-core';
+import { Runner } from '@quicktv/fiddle-core';
 
 const runner = await Runner.create();
 
-// use a specific Electron version to run code from a local folder
+// use a specific QuickTV version to run code from a local folder
 const result = await runner.run('13.1.7', '/path/to/fiddle');
 
-// use a specific Electron version to run code from a github gist
+// use a specific QuickTV version to run code from a github gist
 const result = await runner.run('14.0.0-beta.17', '642fa8daaebea6044c9079e3f8a46390');
 
-// use a specific Electron version to run code from a git repo
+// use a specific QuickTV version to run code from a git repo
 const result = await runner.run('15.0.0-alpha.1', 'https://github.com/my/repo.git');
 
-// use a specific Electron version to run code from iterable filename/content pairs
+// use a specific QuickTV version to run code from iterable filename/content pairs
 const files = new Map<string, string>([['main.js', '"use strict";']]);
 const result = await runner.run('15.0.0-alpha.1', files);
 
-// bisect a regression test across a range of Electron versions
+// bisect a regression test across a range of QuickTV versions
 const result = await runner.bisect('10.0.0', '13.1.7', path_or_gist_or_git_repo);
 
 // see also `Runner.spawn()` in Advanced Use
 ```
 
-### Managing Electron Installations
+### Managing QuickTV Installations
 
 ```ts
-import { Installer, ProgressObject } from '@electron/fiddle-core';
+import { Installer, ProgressObject } from '@quicktv/fiddle-core';
 
 const installer = new Installer();
 installer.on('state-changed', ({version, state}) => {
   console.log(`Version "${version}" state changed: "${state}"`);
 });
 
-// download a version of electron
+// download a version of quicktv
 await installer.ensureDownloaded('12.0.15');
 // expect(installer.state('12.0.5').toBe('downloaded');
 
@@ -103,8 +103,8 @@ await installer.ensureDownloaded('12.0.15', {
 
 // download a version with a specific mirror
 const npmMirrors = {
-  electronMirror: 'https://npmmirror.com/mirrors/electron/',
-  electronNightlyMirror: 'https://npmmirror.com/mirrors/electron-nightly/',
+  electronMirror: 'https://npmmirror.com/mirrors/quicktv/',
+  electronNightlyMirror: 'https://npmmirror.com/mirrors/quicktv-nightly/',
 },
 
 await installer.ensureDownloaded('12.0.15', {
@@ -130,10 +130,10 @@ await installer.install('11.4.10', {
 ### Versions
 
 ```ts
-import { ElectronVersions } from '@electron/fiddle-core';
+import { QuickTVVersions } from '@quicktv/fiddle-core';
 
 // - querying specific versions
-const elves = await ElectronVersions.create();
+const elves = await QuickTVVersions.create();
 // expect(elves.isVersion('12.0.0')).toBe(true);
 // expect(elves.isVersion('12.99.99')).toBe(false);
 const { versions } = elves;
@@ -168,7 +168,7 @@ range = releases.inMajor(10);
 ### child_process.Spawn
 
 ```ts
-import { Runner } from '@electron/fiddle-core';
+import { Runner } from '@quicktv/fiddle-core';
 
 // third argument is same as node.spawn()'s opts
 const child = await runner.spawn('12.0.1', fiddle, nodeSpawnOpts);
@@ -179,23 +179,23 @@ const child = await runner.spawn('12.0.1', fiddle, nodeSpawnOpts);
 ### Using Local Builds
 
 ```ts
-import { Runner } from '@electron/fiddle-core';
+import { Runner } from '@quicktv/fiddle-core';
 
 const runner = await Runner.create();
-const result = await runner.run('/path/to/electron/build', fiddle);
+const result = await runner.run('/path/to/quicktv/build', fiddle);
 ```
 
 ### Using Custom Paths
 
 ```ts
-import { Paths, Runner } from '@electron/fiddle-core';
+import { Paths, Runner } from '@quicktv/fiddle-core';
 
 const paths: Paths = {
-  // where to store zipfiles of downloaded electron versions
-  electronDownloads: '/tmp/my/electron-downloads',
+  // where to store zipfiles of downloaded quicktv versions
+  electronDownloads: '/tmp/my/quicktv-downloads',
 
-  // where to install an electron version to be used by the Runner
-  electronInstall: '/tmp/my/electron-install',
+  // where to install an quicktv version to be used by the Runner
+  electronInstall: '/tmp/my/quicktv-install',
 
   // where to save temporary copies of fiddles
   fiddles: '/tmp/my/fiddles',
@@ -213,7 +213,7 @@ Runner will do this work for you; but if you want finer-grained control
 over the lifecycle of your Fiddle objects, you can instantiate them yourself:
 
 ```ts
-import { FiddleFactory } from '@electron/fiddle-core';
+import { FiddleFactory } from '@quicktv/fiddle-core';
 
 const factory = new FiddleFactory();
 

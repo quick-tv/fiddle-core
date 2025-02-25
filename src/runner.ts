@@ -9,7 +9,7 @@ import { SemVer } from 'semver';
 import { inspect } from 'util';
 
 import { Installer } from './installer';
-import { QuickVersions, Versions } from './versions';
+import { QuickTVVersions, Versions } from './versions';
 import { Fiddle, FiddleFactory, FiddleSource } from './fiddle';
 import { DefaultPaths, Paths } from './paths';
 
@@ -63,7 +63,7 @@ export class Runner {
   ): Promise<Runner> {
     const paths = Object.freeze({ ...DefaultPaths, ...(opts.paths || {}) });
     const installer = opts.installer || new Installer(paths);
-    const versions = opts.versions || (await QuickVersions.create(paths));
+    const versions = opts.versions || (await QuickTVVersions.create(paths));
     const factory = opts.fiddleFactory || new FiddleFactory(paths.fiddles);
     return new Runner(installer, versions, factory);
   }

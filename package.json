@@ -3,8 +3,8 @@
   "homepage": "https://github.com/electron/fiddle-core#readme",
   "author": "Charles Kerr <charles@charleskerr.com>",
   "license": "MIT",
-  "name": "@electron/fiddle-core",
-  "version": "0.0.0-development",
+  "name": "@quicktv/fiddle-core",
+  "version": "1.0.0-development",
   "description": "Run fiddles from anywhere, on any Electron release",
   "main": "dist/index.js",
   "bin": {
