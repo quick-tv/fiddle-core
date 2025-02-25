@@ -1,0 +1,7 @@
+coverage/
+dist/tsdoc-metadata.json
+dist/
+node_modules/
+temp/
+.idea/
+.DS_Store
