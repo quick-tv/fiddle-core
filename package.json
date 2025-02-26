@@ -5,7 +5,7 @@
   "homepage": "https://github.com/quick-tv/fiddle-core#readme",
   "author": "liulipeng <pengliliu8086@gmail.com>",
   "license": "MIT",
-  "name": "@quick-tv/fiddle",
+  "name": "@quick-tv/fiddle-core",
   "version": "0.0.1",
   "description": "Run fiddles from anywhere, on any QuickTV release",
   "main": "dist/index.js",
