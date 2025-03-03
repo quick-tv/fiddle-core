@@ -6,7 +6,7 @@
   "author": "liulipeng <pengliliu8086@gmail.com>",
   "license": "MIT",
   "name": "@quick-tv/fiddle-core",
-  "version": "0.0.1",
+  "version": "0.0.1-nightly.202502261024",
   "description": "Run fiddles from anywhere, on any QuickTV release",
   "main": "dist/index.js",
   "bin": {

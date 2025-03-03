@@ -289,7 +289,7 @@ export class QuickTVVersions extends BaseVersions {
 
   private static async fetchVersions(cacheFile: string): Promise<unknown> {
     const d = debug('fiddle-core:QuickTVVersions:fetchVersions');
-    const url = 'https://registry.npmjs.org/@quicktvui/quicktvui3';
+    const url = 'https://releases.electronjs.org/releases.json';
     d('fetching releases list from', url);
     const response = await fetch(url);
     if (!response.ok) {

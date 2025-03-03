@@ -1,7 +1,7 @@
-# @quicktv/fiddle-core
+# @quick-tv/fiddle-core
 
 [![Test](https://github.com/electron/fiddle-core/actions/workflows/test.yml/badge.svg)](https://github.com/electron/fiddle-core/actions/workflows/test.yml)
-[![NPM](https://img.shields.io/npm/v/@quicktv/fiddle-core.svg?style=flat)](https://npmjs.org/package/@quicktv/fiddle-core)
+[![NPM](https://img.shields.io/npm/v/@quick-tv/fiddle-core.svg?style=flat)](https://npmjs.org/package/@quick-tv/fiddle-core)
 
 Run fiddles from anywhere, on any QuickTV release
 
@@ -45,7 +45,7 @@ Done in 28.19s.
 ### Hello, World!
 
 ```ts
-import { Runner } from '@quicktv/fiddle-core';
+import { Runner } from '@quick-tv/fiddle-core';
 
 const runner = await Runner.create();
 const { status } = await runner.run('13.1.7', '/path/to/fiddle');
@@ -55,7 +55,7 @@ console.log(status);
 ### Running Fiddles
 
 ```ts
-import { Runner } from '@quicktv/fiddle-core';
+import { Runner } from '@quick-tv/fiddle-core';
 
 const runner = await Runner.create();
 
@@ -81,7 +81,7 @@ const result = await runner.bisect('10.0.0', '13.1.7', path_or_gist_or_git_repo)
 ### Managing QuickTV Installations
 
 ```ts
-import { Installer, ProgressObject } from '@quicktv/fiddle-core';
+import { Installer, ProgressObject } from '@quick-tv/fiddle-core';
 
 const installer = new Installer();
 installer.on('state-changed', ({version, state}) => {
@@ -130,7 +130,7 @@ await installer.install('11.4.10', {
 ### Versions
 
 ```ts
-import { QuickTVVersions } from '@quicktv/fiddle-core';
+import { QuickTVVersions } from '@quick-tv/fiddle-core';
 
 // - querying specific versions
 const elves = await QuickTVVersions.create();
@@ -168,7 +168,7 @@ range = releases.inMajor(10);
 ### child_process.Spawn
 
 ```ts
-import { Runner } from '@quicktv/fiddle-core';
+import { Runner } from '@quick-tv/fiddle-core';
 
 // third argument is same as node.spawn()'s opts
 const child = await runner.spawn('12.0.1', fiddle, nodeSpawnOpts);
@@ -179,7 +179,7 @@ const child = await runner.spawn('12.0.1', fiddle, nodeSpawnOpts);
 ### Using Local Builds
 
 ```ts
-import { Runner } from '@quicktv/fiddle-core';
+import { Runner } from '@quick-tv/fiddle-core';
 
 const runner = await Runner.create();
 const result = await runner.run('/path/to/quicktv/build', fiddle);
@@ -188,7 +188,7 @@ const result = await runner.run('/path/to/quicktv/build', fiddle);
 ### Using Custom Paths
 
 ```ts
-import { Paths, Runner } from '@quicktv/fiddle-core';
+import { Paths, Runner } from '@quick-tv/fiddle-core';
 
 const paths: Paths = {
   // where to store zipfiles of downloaded quicktv versions
@@ -213,7 +213,7 @@ Runner will do this work for you; but if you want finer-grained control
 over the lifecycle of your Fiddle objects, you can instantiate them yourself:
 
 ```ts
-import { FiddleFactory } from '@quicktv/fiddle-core';
+import { FiddleFactory } from '@quick-tv/fiddle-core';
 
 const factory = new FiddleFactory();
 
