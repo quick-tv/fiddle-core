@@ -32,6 +32,11 @@ export interface ReleaseInfo {
   files: Array<string>;
 }
 
+export interface NPMVersions {
+  name: string;
+  versions: Record<string, any>;
+}
+
 /**
  * Interface for an object that manages a list of Electron releases.
  *
@@ -289,7 +294,7 @@ export class QuickTVVersions extends BaseVersions {
 
   private static async fetchVersions(cacheFile: string): Promise<unknown> {
     const d = debug('fiddle-core:QuickTVVersions:fetchVersions');
-    const url = 'https://releases.electronjs.org/releases.json';
+    const url = 'https://registry.npmjs.org/@quicktvui/quicktvui3';
     d('fetching releases list from', url);
     const response = await fetch(url);
     if (!response.ok) {
@@ -297,13 +302,13 @@ export class QuickTVVersions extends BaseVersions {
         `Fetching versions failed with status code: ${response.status}`,
       );
     }
-    const responseJson = (await response.json()) as unknown;
+    const responseJson = (await response.json()) as NPMVersions;
     const json = QuickTVVersions.transformer(responseJson);
     await fs.outputJson(cacheFile, json);
     return json;
   }
 
-  private static transformer(versionInfo) {
+  private static transformer(versionInfo: NPMVersions) {
     return Object.values(versionInfo.versions).map((version) => {
       return {
         version: version.version,

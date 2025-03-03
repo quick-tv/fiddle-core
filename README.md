@@ -36,7 +36,7 @@ $ fiddle-core bisect 8.0.0 13.0.0 642fa8daaebea6044c9079e3f8a46390
 🟢 passed 12.0.1
 🔴 failed 12.0.2
 Commits between versions:
-↔ https://github.com/quicktv/quicktv/compare/v12.0.1...v12.0.2
+↔ https://github.com/quick-tv/quick-tv/compare/v12.0.1...v12.0.2
 Done in 28.19s.
 ```
 
@@ -88,7 +88,7 @@ installer.on('state-changed', ({version, state}) => {
   console.log(`Version "${version}" state changed: "${state}"`);
 });
 
-// download a version of quicktv
+// download a version of quick-tv
 await installer.ensureDownloaded('12.0.15');
 // expect(installer.state('12.0.5').toBe('downloaded');
 
@@ -103,8 +103,8 @@ await installer.ensureDownloaded('12.0.15', {
 
 // download a version with a specific mirror
 const npmMirrors = {
-  electronMirror: 'https://npmmirror.com/mirrors/quicktv/',
-  electronNightlyMirror: 'https://npmmirror.com/mirrors/quicktv-nightly/',
+  electronMirror: 'https://npmmirror.com/mirrors/quick-tv/',
+  electronNightlyMirror: 'https://npmmirror.com/mirrors/quick-tv-nightly/',
 },
 
 await installer.ensureDownloaded('12.0.15', {
@@ -182,7 +182,7 @@ const child = await runner.spawn('12.0.1', fiddle, nodeSpawnOpts);
 import { Runner } from '@quick-tv/fiddle-core';
 
 const runner = await Runner.create();
-const result = await runner.run('/path/to/quicktv/build', fiddle);
+const result = await runner.run('/path/to/quick-tv/build', fiddle);
 ```
 
 ### Using Custom Paths
@@ -191,11 +191,11 @@ const result = await runner.run('/path/to/quicktv/build', fiddle);
 import { Paths, Runner } from '@quick-tv/fiddle-core';
 
 const paths: Paths = {
-  // where to store zipfiles of downloaded quicktv versions
-  electronDownloads: '/tmp/my/quicktv-downloads',
+  // where to store zipfiles of downloaded quick-tv versions
+  electronDownloads: '/tmp/my/quick-tv-downloads',
 
-  // where to install an quicktv version to be used by the Runner
-  electronInstall: '/tmp/my/quicktv-install',
+  // where to install an quick-tv version to be used by the Runner
+  electronInstall: '/tmp/my/quick-tv-install',
 
   // where to save temporary copies of fiddles
   fiddles: '/tmp/my/fiddles',
