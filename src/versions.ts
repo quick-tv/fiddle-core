@@ -297,9 +297,27 @@ export class QuickTVVersions extends BaseVersions {
         `Fetching versions failed with status code: ${response.status}`,
       );
     }
-    const json = (await response.json()) as unknown;
+    const responseJson = (await response.json()) as unknown;
+    const json = QuickTVVersions.transformer(responseJson);
     await fs.outputJson(cacheFile, json);
     return json;
+  }
+
+  private static transformer(versionInfo) {
+    return Object.values(versionInfo.versions).map((version) => {
+      return {
+        version: version.version,
+        date: '',
+        node: '',
+        v8: '',
+        uv: '',
+        zlib: '',
+        openssl: '',
+        modules: '',
+        chrome: '',
+        files: [],
+      };
+    });
   }
 
   private static isCacheFresh(cacheTimeMs: number, now: number): boolean {
